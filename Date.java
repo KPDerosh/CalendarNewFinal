@@ -10,8 +10,10 @@ public class Date {
 		this.date = date;
 	}
 	
-	public void addEvent(){
+	public void addEvent(Event event){
+		events.add(event);
 		
+		//TODO: add event to event file
 	}
 
 	public void draw(Graphics2D g2d, int pointX, int pointY) {

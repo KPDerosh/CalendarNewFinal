@@ -21,6 +21,7 @@ public class Calendar extends JPanel  implements ActionListener{
 	private static JButton monthLeft;
 	private static JButton monthRight;
 	private static JButton addEvent;
+	private static JFrame eventWindow;
 	
 	public static void main(String[] args) {
 		initializeMonths();
@@ -68,11 +69,11 @@ public class Calendar extends JPanel  implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if("add".equals(e.getActionCommand())){
-        	JFrame add = new JFrame("add");
-    		add.setSize(500,300);
-    		add.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    		add.setVisible(true);
-    		add.add(new AddEventWind());
+        	eventWindow = new JFrame("add");
+        	eventWindow.setSize(500,300);
+        	eventWindow.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        	eventWindow.setVisible(true);
+        	eventWindow.add(new AddEventWind());
         }
          else if ("increment month".equals(e.getActionCommand())) {
         	if(currentMonth < 2){
@@ -116,7 +117,7 @@ public class Calendar extends JPanel  implements ActionListener{
 					g2d.drawRect(pointX, pointY, 150, 150);
 					pointX += 150;
 					startDay++;
-				} else if (date <= 30) {
+				} else if (date <= 30 || (currentMonth == 1 && date <= 31)) {
 					months.get(currentMonth).getDays().get(date).draw(g2d, pointX, pointY);
 					pointX += 150;
 					date++;
@@ -127,6 +128,21 @@ public class Calendar extends JPanel  implements ActionListener{
 			pointX = 100;
 		}
 	}
+	
+	public static void addEvent(int day, String monthStr, String loc, String name){
+		int month;
+		if(monthStr.equals("sept"))
+			month = 0;
+		else if(monthStr.equals("oct"))
+			month = 1;
+		else
+			month = 2;
+		
+		months.get(month).getDays().get(day).addEvent(new Event(name, loc));
+		
+		eventWindow.dispose();
+	}
+	
 	public static void initializeMonths(){
 		months.add(new Month(0, 0));
 		months.add(new Month(1, 3));
