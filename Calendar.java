@@ -32,17 +32,10 @@ public class Calendar extends JPanel  implements ActionListener{
 	}
 	
 	public Calendar(){
-		addEvent = new JButton("Add Event");
-		addEvent.setLocation(0, 10);
-		addEvent.setEnabled(true);
-		addEvent.setVisible(true);
-		addEvent.setActionCommand("addEvent");
-		addEvent.addActionListener(this);
-		add(addEvent);
-		
-		//this.setLayout(null);
+		this.setLayout(null);
 		monthLeft = new JButton("Previous month");
-		monthLeft.setLocation(300, 75);
+		monthLeft.setLocation(350, 75);
+		monthLeft.setSize(150, 25);
 		monthLeft.setEnabled(true);
 		monthLeft.setVisible(true);
 		monthLeft.setActionCommand("decrement month");
@@ -51,27 +44,37 @@ public class Calendar extends JPanel  implements ActionListener{
 		
 		monthRight = new JButton("Next month");
 		monthRight.setLocation(700, 75);
+		monthRight.setSize(150, 25);
 		monthRight.setEnabled(true);
 		monthRight.setVisible(true);
 		monthRight.setActionCommand("increment month");
 		monthRight.addActionListener(this);
 		add(monthRight);
 		
-		
+		addEvent = new JButton("Add Event");
+		addEvent.setLocation(0, 200);
+		addEvent.setSize(100, 100);
+		addEvent.setEnabled(true);
+		addEvent.setVisible(true);
+		addEvent.setActionCommand("add");
+		addEvent.addActionListener(this);
+		add(addEvent);
 		
 		this.repaint();
+
 		
 		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if("addEvent".equals(e.getActionCommand())) {
-			JFrame myFrame = new JFrame("Add Event");
-			myFrame.setSize(500, 500);
-			myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			myFrame.setVisible(true);
-			
-        } else if ("increment month".equals(e.getActionCommand())) {
+		if("add".equals(e.getActionCommand())){
+        	JFrame add = new JFrame("add");
+    		add.setSize(500,300);
+    		add.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    		add.setVisible(true);
+    		add.add(new AddEventWind());
+        }
+         else if ("increment month".equals(e.getActionCommand())) {
         	if(currentMonth < 2){
         		currentMonth++;
         	}
@@ -103,6 +106,7 @@ public class Calendar extends JPanel  implements ActionListener{
 		int startDay = 0;
 		monthRight.repaint();
 		monthLeft.repaint();
+		addEvent.repaint();
 		
 		startDay = 0;
 		pointX = 100;
