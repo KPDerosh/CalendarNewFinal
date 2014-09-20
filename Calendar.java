@@ -1,17 +1,12 @@
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -21,19 +16,19 @@ import javax.swing.WindowConstants;
 
 public class Calendar extends JPanel  implements ActionListener{
 	
-	private int currentMonth = 0;
 	private static ArrayList<Month> months = new ArrayList<Month>();
+	private static GUIManager guiManager = new GUIManager();
+	private int currentMonth = 0;
 	private static JButton monthLeft;
 	private static JButton monthRight;
 	private static JButton addEvent;
 	private static JButton deleteEvent;
-	public static Calendar self;
 	private static JButton normalTheme;
 	private static JButton christmasTheme;
 	private static JButton fallOrSummerTheme;
 	private static JFrame eventWindow;
-	private static GUIManager guiManager = new GUIManager();
 	private String currentTheme = "normal";
+	public static Calendar self;
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		initializeMonths();
@@ -53,6 +48,12 @@ public class Calendar extends JPanel  implements ActionListener{
 	 * @throws IOException
 	 */
 	private static void loadEventsFromFile() throws FileNotFoundException, IOException {
+		
+		File eventsTxt = new File("events.txt");
+		if(!eventsTxt.exists()){
+			eventsTxt.createNewFile();
+		}
+		
 		try(BufferedReader br = new BufferedReader(new FileReader("events.txt"))) {
 	        StringBuilder sb = new StringBuilder();
 	        String line = br.readLine();
@@ -198,68 +199,7 @@ public class Calendar extends JPanel  implements ActionListener{
 		fallOrSummerTheme.repaint();
 		
 		guiManager.draw(currentTheme, currentMonth, months, g);
-		
-		
-//		Graphics2D g2d = (Graphics2D) g;
-//		g2d.drawRect(0, 0, 100, 1000);			// Draw the toolbar on the side.
-//		int pointX = 0;
-//		int pointY = 100;
-//		
-//		//Draw the top toolbar. the dimensions should bee 900 X 200. 
-//		g2d.drawRect(100, 0, 1050, 50);		//OUTLINE OF THE TITLE BAR IS DRAWN HERE
-//		if(currentMonth == 0){
-//			g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-//			g2d.drawString("September", 520, 50);
-//		} else if(currentMonth == 1){
-//			g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-//			g2d.drawString("October", 520, 50);
-//		} if(currentMonth == 2){
-//			g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-//			g2d.drawString("November", 520, 50);
-//		}
-//		g2d.drawRect(100, 50, 1050, 50);
-//		
-//		
-//		String[] daysOfTheWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-//		int startX = 100;
-//		int drawStringX = 100;
-//		
-//		g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-//		
-//		for(int x = 0; x < 7; x++){
-//			g2d.drawRect(startX, 50, 150, 50);
-//			startX += 150;
-//			g2d.drawString(daysOfTheWeek[x], drawStringX, 85);
-//			drawStringX += 150;
-//		}
-//		
-//		int date = 1;
-//		int startDay = 0;
-//		monthRight.repaint();
-//		monthLeft.repaint();
-//		addEvent.repaint();
-//		
-//		startDay = 0;
-//		pointX = 100;
-//		for (int weeks = 0; weeks < 6; weeks++) {
-//			for (int days = 0; days < 7; days++) {
-//				if (startDay <= months.get(currentMonth).getStartDate()) {
-//					g2d.drawRect(pointX, pointY, 150, 150);
-//					pointX += 150;
-//					startDay++;
-//				} else if (date <= 30 || (currentMonth == 1 && date <= 31)) {
-//					months.get(currentMonth).getDays().get(date).draw(g2d, pointX, pointY);
-//					pointX += 150;
-//					date++;
-//				} else {
-//					g2d.drawRect(pointX, pointY, 150, 150);
-//					pointX += 150;
-//				}
-//				
-//			}
-//			pointY += 150;
-//			pointX = 100;
-//		}
+
 	}
 	
 	public static void addEvent(int day, String monthStr, String loc, String name) throws IOException{
@@ -274,9 +214,6 @@ public class Calendar extends JPanel  implements ActionListener{
 		months.get(month).getDays().get(day).addEvent(new Event(name, loc));
 		
 		FileWriter printWrite = new FileWriter("events.txt", true);
-//		File write = new File("events.txt");
-//		PrintWriter printWrite = new PrintWriter(write);
-//		System.out.println(write.getCanonicalPath());
 		printWrite.append(day + "," + monthStr + "," + loc + "," + name + "\n");
 		printWrite.close();
 		eventWindow.dispose();
