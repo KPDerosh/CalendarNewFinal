@@ -26,6 +26,8 @@ public class Calendar extends JPanel  implements ActionListener{
 	private static JButton monthLeft;
 	private static JButton monthRight;
 	private static JButton addEvent;
+	private static JButton deleteEvent;
+	public static Calendar self;
 	private static JButton normalTheme;
 	private static JButton christmasTheme;
 	private static JButton fallOrSummerTheme;
@@ -107,8 +109,17 @@ public class Calendar extends JPanel  implements ActionListener{
 		addEvent.addActionListener(this);
 		add(addEvent);
 		
+		deleteEvent = new JButton("Delete event");
+		deleteEvent.setLocation(-4, 300);
+		deleteEvent.setSize(104, 100);
+		deleteEvent.setEnabled(true);
+		deleteEvent.setVisible(true);
+		deleteEvent.setActionCommand("del");
+		deleteEvent.addActionListener(this);
+		add(deleteEvent);
+		
 		normalTheme = new JButton("Default");
-		normalTheme.setLocation(0, 350);
+		normalTheme.setLocation(0, 450);
 		normalTheme.setSize(100, 100);
 		normalTheme.setEnabled(true);
 		normalTheme.setVisible(true);
@@ -117,7 +128,7 @@ public class Calendar extends JPanel  implements ActionListener{
 		add(normalTheme);
 		
 		christmasTheme = new JButton("Christmas");
-		christmasTheme.setLocation(0, 450);
+		christmasTheme.setLocation(0, 550);
 		christmasTheme.setSize(100, 100);
 		christmasTheme.setEnabled(true);
 		christmasTheme.setVisible(true);
@@ -126,7 +137,7 @@ public class Calendar extends JPanel  implements ActionListener{
 		add(christmasTheme);
 		
 		fallOrSummerTheme = new JButton("Fall/Summer");
-		fallOrSummerTheme.setLocation(0, 550);
+		fallOrSummerTheme.setLocation(0, 650);
 		fallOrSummerTheme.setSize(100, 100);
 		fallOrSummerTheme.setEnabled(true);
 		fallOrSummerTheme.setVisible(true);
@@ -134,7 +145,7 @@ public class Calendar extends JPanel  implements ActionListener{
 		fallOrSummerTheme.addActionListener(this);
 		add(fallOrSummerTheme);
 		
-		
+		self = this;
 		
 		this.repaint();
 	}
@@ -146,8 +157,14 @@ public class Calendar extends JPanel  implements ActionListener{
         	eventWindow.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         	eventWindow.setVisible(true);
         	eventWindow.add(new AddEventWind());
-        }
-        else if ("increment month".equals(e.getActionCommand())) {
+        } else if ("del".equals(e.getActionCommand())){
+        	eventWindow = new JFrame("Delete Window");
+        	eventWindow.setSize(500,300);
+        	eventWindow.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        	eventWindow.setVisible(true);
+        	eventWindow.add(new DeleteWindOne(eventWindow));
+        
+        } else if ("increment month".equals(e.getActionCommand())) {
         	if(currentMonth < 2){
         		currentMonth++;
         	}
@@ -175,6 +192,7 @@ public class Calendar extends JPanel  implements ActionListener{
 		monthRight.repaint();
 		monthLeft.repaint();
 		addEvent.repaint();
+		deleteEvent.repaint();
 		normalTheme.repaint();
 		christmasTheme.repaint();
 		fallOrSummerTheme.repaint();
@@ -263,6 +281,16 @@ public class Calendar extends JPanel  implements ActionListener{
 		printWrite.close();
 		eventWindow.dispose();
 	}
+	
+	public static void removeWindow(JFrame oldWindow){
+		oldWindow.dispose();
+	}
+	
+	public static ArrayList<Month> getMonths(){
+
+		return months;
+	}
+
 	
 	public static void initializeMonths(){
 		months.add(new Month(0, 0));

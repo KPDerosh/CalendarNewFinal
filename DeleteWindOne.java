@@ -1,52 +1,32 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 
-public class AddEventWind extends JPanel  implements ActionListener{
-
-	private static JTextField nameField;
-	private static JTextField locField;
+public class DeleteWindOne extends JPanel  implements ActionListener{
 	private static JTextField dayField;
 	private static JRadioButton septButton;
 	private static JRadioButton octButton;
 	private static JRadioButton novButton;
 	private static JButton done;
 	private static String monthStr = "sept";
+	private static JFrame thisWindow;
+	
+	public DeleteWindOne(JFrame thisWind){
 
-	public AddEventWind(){
-
+		thisWindow = thisWind;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		JLabel name = new JLabel("Name of event");
-		name.setText("Name of event");
-		name.setVisible(true);
-		add(name);
-
-		nameField = new JTextField(20);
-		nameField.setMaximumSize(new Dimension(500, 25));
-		add(nameField);
-
-		JLabel loc = new JLabel("Location");
-		loc.setText("Location of event");
-		loc.setVisible(true);
-		add(loc);
-
-		locField = new JTextField(20);
-		locField.setMaximumSize(new Dimension(500, 25));
-		add(locField);
-
 		JLabel day = new JLabel("Day");
 		day.setText("Day of event");
 		day.setVisible(true);
@@ -57,16 +37,16 @@ public class AddEventWind extends JPanel  implements ActionListener{
 		add(dayField);
 
 
-		septButton = new JRadioButton("sept");
+		septButton = new JRadioButton("September");
 		septButton.setActionCommand("sept");
 		septButton.setSelected(true);
 		add(septButton);
 
-		octButton = new JRadioButton("oct");
+		octButton = new JRadioButton("October");
 		octButton.setActionCommand("oct");
 		add(octButton);
 
-		novButton = new JRadioButton("nov");
+		novButton = new JRadioButton("November");
 		novButton.setActionCommand("nov");
 		add(novButton);
 
@@ -83,15 +63,15 @@ public class AddEventWind extends JPanel  implements ActionListener{
 		done = new JButton("Done");
 		done.setEnabled(true);
 		done.setVisible(true);
+		//done.setAlignmentY(BOTTOM_ALIGNMENT);
+		//done.setAlignmentX(RIGHT_ALIGNMENT);
 		done.setActionCommand("done");
 		done.addActionListener(this);
 		add(done);
 
 		this.repaint();
 	}
-
-
-	@Override
+	
 	public void actionPerformed(ActionEvent e) {
 		if ("done".equals(e.getActionCommand())) {
 			int day;
@@ -106,23 +86,22 @@ public class AddEventWind extends JPanel  implements ActionListener{
 			if(monthStr.equals("oct"))
 				topday = 31;
 
+			
+			int month = 0;
+			if(monthStr.equals("sept"))
+				month = 0;
+			else if(monthStr.equals("oct"))
+				month = 1;
+			else
+				month = 2;
+			
 			if(day > 0 && day <= topday){
-				if(nameField.getText().equals("")){
-					nameField.setText("Name is required");
-					nameField.setBackground(Color.RED);
-				}
-				else{
-					try {
-						Calendar.addEvent(day, monthStr, locField.getText(), nameField.getText());
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					Calendar.self.repaint();
-
+				JFrame delWindow = new JFrame("Delete Window");
+	        	delWindow.setSize(500,300);
+	        	delWindow.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+	        	delWindow.setVisible(true);
+	        	delWindow.add(new DeleteWindTwo(Calendar.getMonths().get(month).getDays().get(day), thisWindow, delWindow));
 				
-				}
-
 			}
 			else{
 				dayField.setText("Must enter vaild day between 1 and " + topday);
@@ -141,16 +120,5 @@ public class AddEventWind extends JPanel  implements ActionListener{
 
 	}
 
-	//	@Override
-	//	public void paint(Graphics g) {
-	//		Graphics2D g2d = (Graphics2D) g;
-	//		nameField.repaint();
-	//		locField.repaint();
-	//		dayField.repaint();
-	//		septButton.repaint();
-	//		octButton.repaint();
-	//		novButton.repaint();
-	//		done.repaint();
-	//		
-	//	}
+	
 }
