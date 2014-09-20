@@ -1,15 +1,37 @@
 import java.awt.Color;
 
-
 public class Theme {
 
-	Color color = new Color(2);		// Set white as default color
+	Color backGround;
+	Color sideToolbar;
+	Color topToolbar;
+	Color daysOfTheWeek;
 	
 	public Theme(){
 		
 	}
 	
-	public Color getColor(){
-		return this.color;
+	public Theme(Color backGround, Color sideToolbarColor, Color topToolbarColor, Color daysOfTheWeekBar){
+		this.backGround = backGround;
+		this.sideToolbar = sideToolbarColor;
+		this.topToolbar = topToolbarColor;
+		this.daysOfTheWeek = daysOfTheWeekBar;
+	}
+	
+	public Color getBackgroundColor(){
+		return this.backGround;
+	}
+
+	public Color getSideToolbarColor() {
+		return this.sideToolbar;
+	}
+
+	public Color getTopToolbarColor() {
+		// TODO Auto-generated method stub
+		return this.topToolbar;
+	}
+	
+	public Color getDaysOfTheWeekBarColor(){
+		return this.daysOfTheWeek;
 	}
 }
