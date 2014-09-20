@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ public class Date {
 	}
 
 	public void draw(Graphics2D g2d, int pointX, int pointY) {
+		g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 		g2d.drawRect(pointX, pointY, 150, 150);
 		g2d.drawString(date + "", pointX + 10, pointY + 15);
 		pointY += 30;

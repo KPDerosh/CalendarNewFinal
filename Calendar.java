@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -26,7 +27,7 @@ public class Calendar extends JPanel  implements ActionListener{
 	public static void main(String[] args) {
 		initializeMonths();
 		JFrame myFrame = new JFrame("Calendar");
-		myFrame.setSize(1500,1000);
+		myFrame.setSize(1167,1040);
 		myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		myFrame.setVisible(true);
 		myFrame.add(new Calendar());
@@ -35,7 +36,7 @@ public class Calendar extends JPanel  implements ActionListener{
 	public Calendar(){
 		this.setLayout(null);
 		monthLeft = new JButton("Previous month");
-		monthLeft.setLocation(350, 75);
+		monthLeft.setLocation(350, 25);
 		monthLeft.setSize(150, 25);
 		monthLeft.setEnabled(true);
 		monthLeft.setVisible(true);
@@ -44,7 +45,7 @@ public class Calendar extends JPanel  implements ActionListener{
 		add(monthLeft);
 		
 		monthRight = new JButton("Next month");
-		monthRight.setLocation(700, 75);
+		monthRight.setLocation(700, 25);
 		monthRight.setSize(150, 25);
 		monthRight.setEnabled(true);
 		monthRight.setVisible(true);
@@ -93,15 +94,37 @@ public class Calendar extends JPanel  implements ActionListener{
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(currentTheme.getColor());
-		g2d.drawRect(0, 0, 100, 900);			// Draw the toolbar on the side.
+		g2d.drawRect(0, 0, 100, 1000);			// Draw the toolbar on the side.
 		int pointX = 0;
-		int pointY = 150;
+		int pointY = 100;
 		
 		//Draw the top toolbar. the dimensions should bee 900 X 200. 
-		g2d.drawRect(100, 0, 1050, 100);		//OUTLINE OF THE TITLE BAR IS DRAWN HERE
-		g2d.drawString("TOP TOOLBAR TEMPLATE OUTLINE", 500, 75);
-		g2d.drawRect(100, 100, 1050, 50);
-		g2d.drawString("DAYS OF THE WEEK TEMPLATE", 500, 125);
+		g2d.drawRect(100, 0, 1050, 50);		//OUTLINE OF THE TITLE BAR IS DRAWN HERE
+		if(currentMonth == 0){
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+			g2d.drawString("September", 520, 50);
+		} else if(currentMonth == 1){
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+			g2d.drawString("October", 520, 50);
+		} if(currentMonth == 2){
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+			g2d.drawString("November", 520, 50);
+		}
+		g2d.drawRect(100, 50, 1050, 50);
+		
+		
+		String[] daysOfTheWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		int startX = 100;
+		int drawStringX = 100;
+		
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+		
+		for(int x = 0; x < 7; x++){
+			g2d.drawRect(startX, 50, 150, 50);
+			startX += 150;
+			g2d.drawString(daysOfTheWeek[x], drawStringX, 85);
+			drawStringX += 150;
+		}
 		
 		int date = 1;
 		int startDay = 0;
@@ -111,7 +134,7 @@ public class Calendar extends JPanel  implements ActionListener{
 		
 		startDay = 0;
 		pointX = 100;
-		for (int weeks = 0; weeks < 5; weeks++) {
+		for (int weeks = 0; weeks < 6; weeks++) {
 			for (int days = 0; days < 7; days++) {
 				if (startDay <= months.get(currentMonth).getStartDate()) {
 					g2d.drawRect(pointX, pointY, 150, 150);
@@ -121,8 +144,11 @@ public class Calendar extends JPanel  implements ActionListener{
 					months.get(currentMonth).getDays().get(date).draw(g2d, pointX, pointY);
 					pointX += 150;
 					date++;
+				} else {
+					g2d.drawRect(pointX, pointY, 150, 150);
+					pointX += 150;
 				}
-
+				
 			}
 			pointY += 150;
 			pointX = 100;
