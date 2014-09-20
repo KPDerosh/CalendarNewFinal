@@ -88,12 +88,15 @@ public class DeleteWindOne extends JPanel  implements ActionListener{
 
 			
 			int month = 0;
-			if(monthStr.equals("sept"))
+			if(monthStr.equalsIgnoreCase("sept")){
 				month = 0;
-			else if(monthStr.equals("oct"))
+			}
+			else if(monthStr.equalsIgnoreCase("oct")){
 				month = 1;
-			else
+			}
+			else{
 				month = 2;
+			}
 			
 			if(day > 0 && day <= topday){
 				JFrame delWindow = new JFrame("Delete Window");
@@ -108,13 +111,13 @@ public class DeleteWindOne extends JPanel  implements ActionListener{
 				dayField.setBackground(Color.RED);
 			}
 		}
-		if(e.equals("sept")){
+		if(e.getActionCommand().equalsIgnoreCase("sept")){
 			monthStr = "sept";
 		}
-		if(e.equals("oct")){
+		if(e.getActionCommand().equalsIgnoreCase("oct")){
 			monthStr = "oct";
 		}
-		if(e.equals("nov")){
+		if(e.getActionCommand().equalsIgnoreCase("nov")){
 			monthStr = "nov";
 		}
 

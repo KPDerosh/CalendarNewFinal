@@ -129,13 +129,13 @@ public class AddEventWind extends JPanel  implements ActionListener{
 				dayField.setBackground(Color.RED);
 			}
 		}
-		if(e.equals("sept")){
+		if(e.getActionCommand().equalsIgnoreCase("sept")){
 			monthStr = "sept";
 		}
-		if(e.equals("oct")){
+		if(e.getActionCommand().equalsIgnoreCase("oct")){
 			monthStr = "oct";
 		}
-		if(e.equals("nov")){
+		if(e.getActionCommand().equalsIgnoreCase("nov")){
 			monthStr = "nov";
 		}
 

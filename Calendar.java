@@ -204,13 +204,13 @@ public class Calendar extends JPanel  implements ActionListener{
 	
 	public static void addEvent(int day, String monthStr, String loc, String name) throws IOException{
 		int month;
-		if(monthStr.equals("sept"))
+		if (monthStr.equalsIgnoreCase("sept")) {
 			month = 0;
-		else if(monthStr.equals("oct"))
+		} else if (monthStr.equalsIgnoreCase("oct")) {
 			month = 1;
-		else
+		} else {
 			month = 2;
-		
+		}
 		months.get(month).getDays().get(day).addEvent(new Event(name, loc));
 		
 		FileWriter printWrite = new FileWriter("events.txt", true);
