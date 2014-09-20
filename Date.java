@@ -31,7 +31,7 @@ public class Date {
 				eventName = eventName.substring(0, 15) + "...";
 			}
 			g2d.drawString(eventName, pointX + 10, pointY);
-			pointY += 10;
+			pointY += 16;
 		}
 	}
 	

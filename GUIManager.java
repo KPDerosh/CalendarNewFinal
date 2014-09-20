@@ -13,7 +13,6 @@ public class GUIManager {
 	String[] monthArray = {"September", "October", "November"};
 	
 	public GUIManager(){
-		
 	}
 	
 	public void initializeThemes(){

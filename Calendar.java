@@ -5,6 +5,13 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -26,9 +33,10 @@ public class Calendar extends JPanel  implements ActionListener{
 	private static GUIManager guiManager = new GUIManager();
 	private String currentTheme = "normal";
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		initializeMonths();
 		guiManager.initializeThemes();
+		loadEventsFromFile();
 		JFrame myFrame = new JFrame("Calendar");
 		myFrame.setSize(1167,1040);
 		myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -36,6 +44,40 @@ public class Calendar extends JPanel  implements ActionListener{
 		myFrame.add(new Calendar());
 	}
 	
+	
+	/**
+	 * Method to load the events into the calendar from the events file that stores events from previous sessions
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private static void loadEventsFromFile() throws FileNotFoundException, IOException {
+		try(BufferedReader br = new BufferedReader(new FileReader("events.txt"))) {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+
+	        while (line != null) {
+	            sb.append(line);
+	            sb.append(System.lineSeparator());
+	            
+	            String[] objects = line.split(",");
+	            for(int x = 0; x < 4; x++){
+	            }
+	            int monthIndex = 0;
+	            int dayIndex = 0;
+	            if(objects[1].equalsIgnoreCase("sept")){
+	            	monthIndex = 0;
+	            } else if(objects[1].equalsIgnoreCase("oct")){
+	            	monthIndex = 1;
+	            } else {
+	            	monthIndex = 2;
+	            }
+	            dayIndex = Integer.parseInt(objects[0]);
+	            months.get(monthIndex).getDays().get(dayIndex).addEvent(new Event(objects[2], objects[3]));
+	            line = br.readLine();
+	        }
+	    }
+	}
+
 	public Calendar(){
 		this.setLayout(null);
 		monthLeft = new JButton("Previous month");
@@ -202,7 +244,7 @@ public class Calendar extends JPanel  implements ActionListener{
 //		}
 	}
 	
-	public static void addEvent(int day, String monthStr, String loc, String name){
+	public static void addEvent(int day, String monthStr, String loc, String name) throws IOException{
 		int month;
 		if(monthStr.equals("sept"))
 			month = 0;
@@ -213,6 +255,12 @@ public class Calendar extends JPanel  implements ActionListener{
 		
 		months.get(month).getDays().get(day).addEvent(new Event(name, loc));
 		
+		FileWriter printWrite = new FileWriter("events.txt", true);
+//		File write = new File("events.txt");
+//		PrintWriter printWrite = new PrintWriter(write);
+//		System.out.println(write.getCanonicalPath());
+		printWrite.append(day + "," + monthStr + "," + loc + "," + name + "\n");
+		printWrite.close();
 		eventWindow.dispose();
 	}
 	

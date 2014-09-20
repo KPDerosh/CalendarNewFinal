@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -111,7 +112,12 @@ public class AddEventWind extends JPanel  implements ActionListener{
 					nameField.setBackground(Color.RED);
 				}
 				else{
-					Calendar.addEvent(day, monthStr, locField.getText(), nameField.getText());
+					try {
+						Calendar.addEvent(day, monthStr, locField.getText(), nameField.getText());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				
 				}
 
