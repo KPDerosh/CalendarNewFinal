@@ -19,6 +19,9 @@ public class Calendar extends JPanel  implements ActionListener{
 	private static JButton monthLeft;
 	private static JButton monthRight;
 	private static JButton addEvent;
+	private static JButton normalTheme;
+	private static JButton christmasTheme;
+	private static JButton fallOrSummerTheme;
 	private static JFrame eventWindow;
 	private static GUIManager guiManager = new GUIManager();
 	private String currentTheme = "normal";
@@ -62,6 +65,35 @@ public class Calendar extends JPanel  implements ActionListener{
 		addEvent.addActionListener(this);
 		add(addEvent);
 		
+		normalTheme = new JButton("Default");
+		normalTheme.setLocation(0, 350);
+		normalTheme.setSize(100, 100);
+		normalTheme.setEnabled(true);
+		normalTheme.setVisible(true);
+		normalTheme.setActionCommand("normalTheme");
+		normalTheme.addActionListener(this);
+		add(normalTheme);
+		
+		christmasTheme = new JButton("Christmas");
+		christmasTheme.setLocation(0, 450);
+		christmasTheme.setSize(100, 100);
+		christmasTheme.setEnabled(true);
+		christmasTheme.setVisible(true);
+		christmasTheme.setActionCommand("christmasTheme");
+		christmasTheme.addActionListener(this);
+		add(christmasTheme);
+		
+		fallOrSummerTheme = new JButton("Fall/Summer");
+		fallOrSummerTheme.setLocation(0, 550);
+		fallOrSummerTheme.setSize(100, 100);
+		fallOrSummerTheme.setEnabled(true);
+		fallOrSummerTheme.setVisible(true);
+		fallOrSummerTheme.setActionCommand("fallOrSummerTheme");
+		fallOrSummerTheme.addActionListener(this);
+		add(fallOrSummerTheme);
+		
+		
+		
 		this.repaint();
 	}
 	
@@ -77,22 +109,36 @@ public class Calendar extends JPanel  implements ActionListener{
         	if(currentMonth < 2){
         		currentMonth++;
         	}
-        } else {
+        } 
+        else if ("normalTheme".equals(e.getActionCommand())) {
+        	currentTheme = "normal";
+        }
+        else if ("christmasTheme".equals(e.getActionCommand())) {
+        	currentTheme = "Christmas";
+        }
+        else if ("fallOrSummerTheme".equals(e.getActionCommand())) {
+        	currentTheme = "Summer";
+        }else {
         	if(currentMonth > 0){
         		currentMonth--;
         	}
         }
+		
         this.getParent().getParent().repaint();
         this.repaint();
     }
 	 
 	@Override
 	public void paint(Graphics g) {
-		guiManager.draw(currentTheme, currentMonth, months, g);
-		
 		monthRight.repaint();
 		monthLeft.repaint();
 		addEvent.repaint();
+		normalTheme.repaint();
+		christmasTheme.repaint();
+		fallOrSummerTheme.repaint();
+		
+		guiManager.draw(currentTheme, currentMonth, months, g);
+		
 		
 //		Graphics2D g2d = (Graphics2D) g;
 //		g2d.drawRect(0, 0, 100, 1000);			// Draw the toolbar on the side.
@@ -172,7 +218,7 @@ public class Calendar extends JPanel  implements ActionListener{
 	
 	public static void initializeMonths(){
 		months.add(new Month(0, 0));
-		months.add(new Month(1, 3));
+		months.add(new Month(1, 2));
 		months.add(new Month(2, 5));
 		
 	}

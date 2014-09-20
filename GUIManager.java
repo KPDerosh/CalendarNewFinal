@@ -21,19 +21,22 @@ public class GUIManager {
 		themes.add(new Theme(new Color(255, 255, 255),
 				       		 new Color(0, 0, 0),
 				       		 new Color(0, 0, 0),
-				       		 new Color(0, 0, 0)
+				       		 new Color(0, 0, 0),
+				       		 new Color(255, 255, 255)
 				       		 ));
 		//initialize christmas theme
-		themes.add(new Theme(new Color(40, 179, 36), 
+		themes.add(new Theme(new Color(0, 190, 15), 
 				   			 new Color(0, 0, 0),
-				   			 new Color(0, 255, 255),
-				   			 new Color(0, 255, 255)
+				   			 new Color(0, 0, 0),
+				   			 new Color(0, 0, 0),
+				   			 new Color(255, 0, 0)
 				   			 ));
 		//initialize summer theme
-		themes.add(new Theme(new Color(250, 250, 195),
-							 new Color(0, 255, 255),
-							 new Color(0, 255, 255),
-							 new Color(0, 255, 255)
+		themes.add(new Theme(new Color(0, 225, 255),
+							 new Color(0, 0, 0),
+							 new Color(0, 0, 0),
+							 new Color(0, 0, 0),
+							 new Color(255, 191, 0)
 				));
 	}
 	
@@ -47,6 +50,7 @@ public class GUIManager {
 		}
 		
 		Graphics2D g2d = (Graphics2D) g;
+		
 		g2d.setColor(themes.get(themeIndex).getBackgroundColor());
 		g2d.fillRect(0, 0, 1167,1040);			//Draw the background
 		
@@ -88,18 +92,22 @@ public class GUIManager {
 		for (int weeks = 0; weeks < 6; weeks++) {
 			for (int days = 0; days < 7; days++) {
 				if (startDay <= months.get(currentMonth).getStartDate()) {
-					g2d.setColor(new Color(135, 135, 135));
-					g2d.fillRect(pointX, pointY, 150, 150);
+					g2d.setColor(new Color(0, 0, 0));
+					g2d.drawRect(pointX, pointY, 150, 150);
+					g2d.setColor(new Color(240, 240, 240));
+					g2d.fillRect(pointX + 1, pointY + 1, 149, 149);
 					pointX += 150;
 					startDay++;
 				} else if (date <= 30 || (currentMonth == 1 && date <= 31)) {
-					g2d.setColor(new Color(0, 0, 0));
+					g2d.setColor(themes.get(themeIndex).getDaysColor());
 					months.get(currentMonth).getDays().get(date).draw(g2d, pointX, pointY);
 					pointX += 150;
 					date++;
 				} else {
-					g2d.setColor(new Color(135, 135, 135));
-					g2d.fillRect(pointX, pointY, 150, 150);
+					g2d.setColor(new Color(0, 0, 0));
+					g2d.drawRect(pointX, pointY, 150, 150);
+					g2d.setColor(new Color(240, 240, 240));
+					g2d.fillRect(pointX + 1, pointY + 1, 149, 149);
 					pointX += 150;
 				}
 				
@@ -107,11 +115,6 @@ public class GUIManager {
 			pointY += 150;
 			pointX = 100;
 		}
-		
-		
-		
-		
-		
 	}
 	
 }

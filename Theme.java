@@ -6,16 +6,18 @@ public class Theme {
 	Color sideToolbar;
 	Color topToolbar;
 	Color daysOfTheWeek;
+	Color daysColor;
 	
 	public Theme(){
 		
 	}
 	
-	public Theme(Color backGround, Color sideToolbarColor, Color topToolbarColor, Color daysOfTheWeekBar){
+	public Theme(Color backGround, Color sideToolbarColor, Color topToolbarColor, Color daysOfTheWeekBar, Color daysColor){
 		this.backGround = backGround;
 		this.sideToolbar = sideToolbarColor;
 		this.topToolbar = topToolbarColor;
 		this.daysOfTheWeek = daysOfTheWeekBar;
+		this.daysColor = daysColor;
 	}
 	
 	public Color getBackgroundColor(){
@@ -33,5 +35,9 @@ public class Theme {
 	
 	public Color getDaysOfTheWeekBarColor(){
 		return this.daysOfTheWeek;
+	}
+
+	public Color getDaysColor() {
+		return this.daysColor;
 	}
 }
