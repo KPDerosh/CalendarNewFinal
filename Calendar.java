@@ -146,7 +146,7 @@ public class Calendar extends JPanel  implements ActionListener{
 	public static void initializeMonths(){
 		months.add(new Month(0, 0));
 		months.add(new Month(1, 3));
-		months.add(new Month(2, 1));
+		months.add(new Month(2, 5));
 		
 	}
 
